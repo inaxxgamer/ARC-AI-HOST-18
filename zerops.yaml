@@ -4,7 +4,10 @@ zerops:
       base: docker@latest
       prepareCommands:
         - docker image pull ghcr.io/tashfeenahmed/freellmapi:v0.15.0
-      start: docker run --network=host -e PORT=3001 -e ENCRYPTION_KEY=$ENCRYPTION_KEY -e FREEAPI_DB_PATH=/app/server/data/freeapi.db ghcr.io/tashfeenahmed/freellmapi:v0.15.0
+      volume:
+        hostname: data
+        mountPath: /mnt/data
+      start: docker run --network=host -e PORT=3001 -e ENCRYPTION_KEY=$ENCRYPTION_KEY -e FREEAPI_DB_PATH=/mnt/data/freeapi.db -v /mnt/data:/mnt/data ghcr.io/tashfeenahmed/freellmapi:v0.15.0
       ports:
         - port: 3001
           httpSupport: true
